@@ -1,29 +1,47 @@
 
-public class Solution {
+/**
+ * ----- Comment from Leetcode -----
+ *
+ * The read4 API is defined in the parent class Reader4. int read4(char[]
+ * buffer4);
+ */
+public class Solution extends Reader4 {
 
-    public int[][] rangeAddQueries(int sideMatrix, int[][] queries) {
-        int[][] answerRangeAddQueries = new int[sideMatrix][sideMatrix];
+    private static final int MAX_READ_CHARS_PER_CALL_OF_READ4 = 4;
+    private final char[] bufferRead4 = new char[MAX_READ_CHARS_PER_CALL_OF_READ4];
 
-        for (int[] query : queries) {
-            int startRow = query[0];
-            int startColumn = query[1];
-            int endRow = query[2];
-            int endColumn = query[3];
+    private int indexInBufferRead4;
+    private int numberCharsInBufferRead4;
 
-            for (int row = startRow; row <= endRow; ++row) {
-                ++answerRangeAddQueries[row][startColumn];
-                if (endColumn + 1 < sideMatrix) {
-                    --answerRangeAddQueries[row][endColumn + 1];
-                }
+    public int read(char[] destinationBuffer, int numberOfCharsToRead) {
+
+        int indexInDestinationBuffer = 0;
+        int numberOfCharsSentToDestinationBuffer = 0;
+
+        while (numberOfCharsToRead > 0) {
+
+            while (numberCharsInBufferRead4 > 0 && numberOfCharsToRead > 0) {
+                destinationBuffer[indexInDestinationBuffer] = bufferRead4[indexInBufferRead4];
+
+                ++indexInBufferRead4;
+                ++indexInDestinationBuffer;
+                ++numberOfCharsSentToDestinationBuffer;
+
+                --numberOfCharsToRead;
+                --numberCharsInBufferRead4;
+            }
+
+            if (numberCharsInBufferRead4 == 0) {
+                indexInBufferRead4 = 0;
+            }
+            if (numberOfCharsToRead > 0) {
+                numberCharsInBufferRead4 = super.read4(bufferRead4);
+            }
+            if (numberCharsInBufferRead4 == 0) {
+                break;
             }
         }
 
-        for (int row = 0; row < sideMatrix; ++row) {
-            for (int column = 1; column < sideMatrix; ++column) {
-                answerRangeAddQueries[row][column] += answerRangeAddQueries[row][column - 1];
-            }
-        }
-
-        return answerRangeAddQueries;
+        return numberOfCharsSentToDestinationBuffer;
     }
 }
