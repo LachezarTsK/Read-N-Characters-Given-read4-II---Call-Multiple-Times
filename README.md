@@ -6,7 +6,7 @@ Challenge at LeetCode.com. Tags: Data Stream, Simulation.
 As mentioned in the problem statement, read4 API is already defined.<br/>
 The API just has to be applied in a way that solves the problem.
 
-This problem is a harder version of “Read N Characters Given Read4” at https://github.com/LachezarTsK/Read-N-Characters-Given-Read4
+This problem is a harder version of “Read N Characters Given Read4”<br/> at https://github.com/LachezarTsK/Read-N-Characters-Given-Read4
 
 The difference between “Read N Characters Given Read4” and “Read N Characters Given Read4 II” consists only in the volume of input and it is a clear demonstration that implementing a significant change in volume of input can result in a change of the difficulty of the problem and how it is approached by the solution.
 
